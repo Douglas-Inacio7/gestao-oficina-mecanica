@@ -3,6 +3,9 @@
  * 
  * Exibe as informações de um cliente em formato de card
  * Inclui botões de editar e deletar
+ * 
+ * DATA-TESTID adicionados para automação de testes com Playwright
+ * Trilha 1 - Automação Web - Projeto Final QA
  */
 
 const ClientCard = ({ client, onEdit, onDelete }) => {
@@ -13,7 +16,7 @@ const ClientCard = ({ client, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+    <div data-testid="client-card" className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
       {/* Cabeçalho do card - cor baseada no tipo de cliente */}
       <div className={`px-4 py-3 ${
         client.clientType === 'particular' ? 'bg-blue-500' : 'bg-green-500'
@@ -21,7 +24,7 @@ const ClientCard = ({ client, onEdit, onDelete }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="text-2xl">{client.clientType === 'particular' ? '👤' : '🏢'}</span>
-            <span className="font-semibold">{client.name}</span>
+            <span data-testid="client-card-name" className="font-semibold">{client.name}</span>
           </div>
           <span className="text-xs bg-white bg-opacity-30 px-2 py-1 rounded-full">
             ID: {client.id}
@@ -34,13 +37,13 @@ const ClientCard = ({ client, onEdit, onDelete }) => {
         {/* Email */}
         <div className="flex items-center gap-2 text-gray-600">
           <span className="text-sm">📧</span>
-          <span className="text-sm truncate">{client.email}</span>
+          <span data-testid="client-card-email" className="text-sm truncate">{client.email}</span>
         </div>
         
         {/* Telefone */}
         <div className="flex items-center gap-2 text-gray-600">
           <span className="text-sm">📞</span>
-          <span className="text-sm">{client.phone}</span>
+          <span data-testid="client-card-phone" className="text-sm">{client.phone}</span>
         </div>
         
         {/* Endereço (se existir) */}
@@ -60,12 +63,14 @@ const ClientCard = ({ client, onEdit, onDelete }) => {
       {/* Botões de ação */}
       <div className="px-4 py-3 bg-gray-50 flex justify-end gap-2">
         <button
+          data-testid="edit-client-button"
           onClick={() => onEdit(client)}
           className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm transition-colors flex items-center gap-1"
         >
           ✏️ Editar
         </button>
         <button
+          data-testid="delete-client-button"
           onClick={() => onDelete(client.id)}
           className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm transition-colors flex items-center gap-1"
         >

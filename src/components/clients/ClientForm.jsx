@@ -2,6 +2,9 @@
  * COMPONENTE: ClientForm
  * 
  * Formulário para cadastrar ou editar um cliente
+ * 
+ * DATA-TESTID adicionados para automação de testes com Playwright
+ * Trilha 1 - Automação Web - Projeto Final QA
  */
 
 import { useState, useEffect } from 'react';
@@ -99,13 +102,14 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
         </div>
         
         {/* Formulário */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4" data-testid="client-form">
           {/* Nome */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Nome Completo *
             </label>
             <input
+              data-testid="client-name"
               type="text"
               name="name"
               value={formData.name}
@@ -122,6 +126,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
               Email *
             </label>
             <input
+              data-testid="client-email"
               type="email"
               name="email"
               value={formData.email}
@@ -138,6 +143,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
               Telefone *
             </label>
             <input
+              data-testid="client-phone"
               type="tel"
               name="phone"
               value={formData.phone}
@@ -154,6 +160,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
               Tipo de Cliente
             </label>
             <select
+              data-testid="client-type"
               name="clientType"
               value={formData.clientType}
               onChange={handleChange}
@@ -170,6 +177,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
               Endereço (opcional)
             </label>
             <textarea
+              data-testid="client-address"
               name="address"
               value={formData.address}
               onChange={handleChange}
@@ -182,6 +190,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
           {/* Botões */}
           <div className="flex gap-3 pt-4">
             <button
+              data-testid="save-client-button"
               type="submit"
               disabled={isSubmitting}
               className={`flex-1 ${initialData ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-blue-500 hover:bg-blue-600'} text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50`}
@@ -189,6 +198,7 @@ const ClientForm = ({ initialData, onSubmit, onCancel }) => {
               {isSubmitting ? 'Salvando...' : (initialData ? '✏️ Atualizar' : '💾 Salvar')}
             </button>
             <button
+              data-testid="cancel-client-button"
               type="button"
               onClick={onCancel}
               className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition-colors"

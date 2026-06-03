@@ -2,6 +2,9 @@
  * PÁGINA: Clientes
  * 
  * Gerencia o CRUD (Create, Read, Update, Delete) de clientes
+ * 
+ * DATA-TESTID adicionados para automação de testes com Playwright
+ * Trilha 1 - Automação Web - Projeto Final QA
  */
 
 import { useState, useEffect } from 'react';
@@ -87,6 +90,7 @@ const Clients = () => {
             </p>
           </div>
           <button
+            data-testid="new-client-button"
             onClick={handleNewClient}
             className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors flex items-center gap-2 text-sm md:text-base"
           >
@@ -101,6 +105,7 @@ const Clients = () => {
           <div className="relative w-full sm:w-80">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
             <input
+              data-testid="search-client"
               type="text"
               placeholder="Buscar por nome, email ou telefone..."
               value={searchTerm}
@@ -116,7 +121,7 @@ const Clients = () => {
       </div>
       
       {message.text && (
-        <div className={`px-4 md:px-6 py-3 text-sm ${
+        <div data-testid="client-message" className={`px-4 md:px-6 py-3 text-sm ${
           message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
         }`}>
           {message.text}
@@ -130,7 +135,7 @@ const Clients = () => {
             <p className="text-gray-500 mt-2">Carregando clientes...</p>
           </div>
         ) : filteredClients.length === 0 ? (
-          <div className="text-center py-12">
+          <div data-testid="empty-state" className="text-center py-12">
             <div className="text-6xl mb-4">📭</div>
             <h3 className="text-lg md:text-xl font-semibold text-gray-600 mb-2">
               {searchTerm ? 'Nenhum cliente encontrado' : 'Nenhum cliente cadastrado'}
@@ -140,7 +145,7 @@ const Clients = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div data-testid="clients-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredClients.map((client) => (
               <ClientCard
                 key={client.id}

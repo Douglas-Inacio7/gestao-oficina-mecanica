@@ -1,0 +1,46 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Permite executar manualmente pelo GitHub
+
+jobs:
+  test:
+    timeout-minutes: 10  # Tempo máximo de execução
+    runs-on: ubuntu-latest  # Roda no ambiente Linux do GitHub
+    
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]  # Testa nos 3 navegadores
+
+    steps:
+    # 1. Faz o checkout (baixa) do código
+    - uses: actions/checkout@v4
+    
+    # 2. Instala o Node.js
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        
+    # 3. Instala as dependências do projeto
+    - name: Install dependencies
+      run: npm ci  # npm ci é mais rápido e confiável que npm install
+      
+    # 4. Instala os navegadores do Playwright
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+      
+    # 5. Executa os testes (apenas no navegador específico da matrix)
+    - name: Run Playwright tests
+      run: npx playwright test --project=${{ matrix.browser }}
+      
+    # 6. Faz o upload do relatório HTML (como artefato)
+    - uses: actions/upload-artifact@v4
+      if: always()  # Sempre executa, mesmo se os testes falharem
+      with:
+        name: playwright-report-${{ matrix.browser }}
+        path: playwright-report/
+        retention-days: 30

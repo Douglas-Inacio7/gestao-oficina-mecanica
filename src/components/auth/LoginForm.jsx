@@ -5,6 +5,9 @@
  * - Validação de email e senha forte
  * - Botão "olhinho" para mostrar/esconder a senha
  * - Feedback visual em tempo real
+ * 
+ * DATA-TESTID adicionados para automação de testes com Playwright
+ * Trilha 1 - Automação Web - Projeto Final QA
  */
 
 import { useState } from 'react';
@@ -24,7 +27,6 @@ const LockIcon = () => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
   </svg>
 );
-
 
 // 👁️‍🗨️ Ícone "Olho fechado" (esconder senha)
 const EyeOpenIcon = () => (
@@ -131,13 +133,17 @@ const LoginForm = ({ onLoginSuccess }) => {
             </p>
           </div>
 
+          {/* MENSAGEM DE ERRO - Com data-testid para testes automatizados */}
           {loginError && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+            <div 
+              data-testid="error-message"
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm"
+            >
               {loginError}
             </div>
           )}
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} data-testid="login-form">
             {/* Campo Email */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -147,6 +153,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                 </span>
               </label>
               <input
+                data-testid="email-input"
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
@@ -170,14 +177,16 @@ const LoginForm = ({ onLoginSuccess }) => {
               </label>
               <div className="relative">
                 <input
+                  data-testid="password-input"
                   type={showPassword ? "text" : "password"}  // Alterna entre texto e senha
                   value={password}
                   onChange={handlePasswordChange}
                   placeholder="Digite sua senha"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
                 />
-                {/* Botão do olhinho */}
+                {/* Botão do olhinho - Com data-testid para testes */}
                 <button
+                  data-testid="toggle-password-visibility"
                   type="button"
                   onClick={toggleShowPassword}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-600 transition-colors"
@@ -212,8 +221,9 @@ const LoginForm = ({ onLoginSuccess }) => {
               </div>
             </div>
 
-            {/* Botão de Login */}
+            {/* Botão de Login - Com data-testid para testes */}
             <button
+              data-testid="login-button"
               type="submit"
               disabled={isLoading}
               className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-all duration-200 disabled:opacity-50"
